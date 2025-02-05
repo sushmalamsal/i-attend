@@ -2,7 +2,6 @@ import 'package:i_attend/import_all.dart';
 
 class AddTaskRepo {
   final IAddTaskDataSource _dataSource;
-
   AddTaskRepo(this._dataSource);
 
   Future<bool> addTask({
