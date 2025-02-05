@@ -14,7 +14,7 @@ class KAppbar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         title,
         style: TextStyle(
-          fontSize: 15,
+          fontSize: 14,
           fontWeight: FontWeight.bold,
           color: Colors.grey.shade700,
         ),
