@@ -6,7 +6,8 @@ class AddTaskView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AddTaskViewModel>.reactive(
-      viewModelBuilder: () => AddTaskViewModel(),
+      viewModelBuilder: () =>
+          AddTaskViewModel(AddTaskRepo(AddTaskDataSource())),
       builder: (context, model, child) {
         return Scaffold(
           appBar: KAppbar(title: "Add Tasks"),
@@ -37,10 +38,10 @@ class AddTaskView extends StatelessWidget {
                   onPressed: model.isButtonEnabled
                       ? () {
                           String assigneeId = "6698a07567669cb755d5b988";
-                          model.addTask(assigneeId);
+                          model.addTask(assigneeId, context);
                         }
                       : null,
-                )
+                ),
               ],
             ),
           ),

@@ -1,17 +1,21 @@
 import 'package:i_attend/import_all.dart';
 
-class AddtaskRepo {
-  final AddTaskDataSource _dataSource = AddTaskDataSource();
+class AddTaskRepo {
+  final IAddTaskDataSource _dataSource;
 
-  Future<bool> addTask(
-      {required String title,
-      required String description,
-      required String deadline,
-      required String assigneeID}) {
+  AddTaskRepo(this._dataSource);
+
+  Future<bool> addTask({
+    required String title,
+    required String description,
+    required String deadline,
+    required String assigneeID,
+  }) {
     return _dataSource.addTask(
-        title: title,
-        description: description,
-        deadline: deadline,
-        assigneeID: assigneeID);
+      title: title,
+      description: description,
+      deadline: deadline,
+      assigneeID: assigneeID,
+    );
   }
 }
