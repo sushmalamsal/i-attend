@@ -25,7 +25,7 @@ class KTextField extends StatelessWidget {
         ),
         floatingLabelStyle: TextStyle(color: Colors.orangeAccent),
       ),
-      onChanged: (_) => onChanged,
+      onChanged: (_) => onChanged(),
     );
   }
 }

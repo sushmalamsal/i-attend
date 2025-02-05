@@ -2,6 +2,7 @@
 export 'package:flutter/material.dart';
 export 'package:stacked/stacked.dart';
 export 'package:google_fonts/google_fonts.dart';
+export 'dart:convert';
 
 //common folder
 export '../common/k_appbar.dart';
@@ -14,6 +15,8 @@ export '../common/k_small_text.dart';
 export '../common/k_text_field.dart';
 
 //data folder
+export 'package:i_attend/data/datasource/addtask_datasource.dart';
+export 'package:i_attend/data/repository/addtask_repo.dart';
 
 //modules folder
 export '../modules/dashboard/viewmodels/dashboard_viewmodel.dart';

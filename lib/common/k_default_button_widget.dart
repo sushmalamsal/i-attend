@@ -5,7 +5,7 @@ class KDefaultButton extends StatelessWidget {
   final Color labelColor;
   final Color buttonColor;
   final double width;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
   final double height;
   final double borderWidth;
   final Color borderColor;
@@ -16,7 +16,7 @@ class KDefaultButton extends StatelessWidget {
     required this.label,
     this.labelColor = Colors.orangeAccent,
     this.buttonColor = Colors.white,
-    required this.onPressed,
+    this.onPressed,
     this.height = 35.0,
     this.borderWidth = 0.8,
     this.borderColor = Colors.orangeAccent,
@@ -24,6 +24,7 @@ class KDefaultButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isDisabled = onPressed == null;
     return SizedBox(
       width: width,
       height: height,
@@ -35,7 +36,7 @@ class KDefaultButton extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: BorderSide(
-              color: borderColor,
+              color: isDisabled ? Colors.transparent : borderColor,
               width: borderWidth,
             ),
           ),
@@ -45,7 +46,7 @@ class KDefaultButton extends StatelessWidget {
           style: TextStyle(
             fontSize: 11.0,
             fontWeight: FontWeight.w600,
-            color: labelColor,
+            color: isDisabled ? Colors.grey.shade500 : labelColor,
           ),
         ),
       ),
