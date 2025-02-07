@@ -8,13 +8,26 @@ class AddTaskRepo {
     required String title,
     required String description,
     required String deadline,
-    required String assigneeID,
-  }) {
-    return _dataSource.addTask(
-      title: title,
-      description: description,
-      deadline: deadline,
-      assigneeID: assigneeID,
-    );
+    required List<String>? assigneeIDs,
+  }) async {
+    try {
+      final response = await _dataSource.addTask(
+        title: title,
+        description: description,
+        deadline: deadline,
+        assigneeIDs: assigneeIDs,
+      );
+
+      if (response.statusCode == 201) {
+        print("Task added successfully: ${response.data}");
+        return true;
+      } else {
+        print("Failed to add task: ${response.data}");
+        return false;
+      }
+    } catch (e) {
+      print("Error adding task: $e");
+      return false;
+    }
   }
 }

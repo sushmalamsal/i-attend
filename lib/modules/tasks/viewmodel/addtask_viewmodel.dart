@@ -19,7 +19,7 @@ class AddTaskViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> addTask(String assigneeId, BuildContext context) async {
+  Future<void> addTask(List<String>? assigneeIDs, BuildContext context) async {
     String title = taskTitleController.text;
     String description = taskDescriptionController.text;
     String deadline = taskDeadlineController.text;
@@ -28,22 +28,56 @@ class AddTaskViewModel extends BaseViewModel {
       title: title,
       description: description,
       deadline: deadline,
-      assigneeID: assigneeId,
+      assigneeIDs: assigneeIDs,
     );
 
     if (success) {
-      showSnackbar(context, "Task added successfully!", true);
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Success"),
+            content: const Text("Task added successfully!"),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, true);
+                  Navigator.pop(context, true);
+                  // Navigator.popUntil(context, ()=>)
+                },
+                child: const Text("OK"),
+              ),
+            ],
+          );
+        },
+      );
     } else {
-      showSnackbar(context, "Failed to add task. Try again.", false);
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("Failed"),
+            content: const Text("Failed to add task. Try again."),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pop(context);
+                },
+                child: const Text("cancel"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Try again"),
+              ),
+            ],
+          );
+        },
+      );
     }
-  }
-
-  void showSnackbar(BuildContext context, String message, bool isSuccess) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: isSuccess ? Colors.green : Colors.red,
-      ),
-    );
   }
 }
