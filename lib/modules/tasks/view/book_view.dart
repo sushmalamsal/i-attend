@@ -1,31 +1,50 @@
-// import 'package:i_attend/import_all.dart';
-// import 'package:i_attend/modules/tasks/widgets/k_task_container.dart';
-// import 'package:rive/rive.dart';
+import 'package:i_attend/import_all.dart';
+import 'package:rive/rive.dart';
 
-// class BookView extends StatelessWidget {
-//   const BookView({Key? key}) : super(key: key);
+class BookView extends StatelessWidget {
+  const BookView({Key? key}) : super(key: key);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return ViewModelBuilder<BookViewModel>.reactive(
-//       viewModelBuilder: () => BookViewModel(),
-//       builder: (context, model, child) {
-//         return GestureDetector(
-//           onTap: model.onBookTap,
-//           child: Stack(children: <Widget>[
-//             RiveAnimation.asset(
-//               'assets/book_flip.riv',
-//               fit: BoxFit.contain,
-//               onInit: model.onRiveInit,
-//             ),
-//             TaskContainer(
-//                 taskTitle: "hello",
-//                 deadline: "hehe",
-//                 description: "bye",
-//                 assigningEntity: "hiie", )
-//           ]),
-//         );
-//       },
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder<BookViewModel>.reactive(
+      viewModelBuilder: () => BookViewModel(),
+      builder: (context, model, child) {
+        return Stack(children: <Widget>[
+          RiveAnimation.asset(
+            'assets/book_flip.riv',
+            fit: BoxFit.contain,
+            onInit: model.onRiveInit,
+          ),
+          Positioned(
+            top: 300,
+            left: 120,
+            child: model.isBookFlipped == false
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: model.onBookTap,
+                          child: const Text("Mark as Done"),
+                        ),
+                      ),
+                      const Text("Hello"),
+                      const Text("Bye"),
+                    ],
+                  )
+                : Center(
+                    child: const Text(
+                      "completed",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green),
+                    ),
+                  ),
+          ),
+        ]);
+      },
+    );
+  }
+}

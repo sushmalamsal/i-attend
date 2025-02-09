@@ -125,7 +125,7 @@ class TaskCategoryCard extends ViewModelWidget<TaskViewModel> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
                     crossAxisSpacing: 8,
-                    mainAxisSpacing: 8,
+                    mainAxisSpacing: 35,
                     childAspectRatio: 1.2,
                   ),
                   itemCount: viewModel.isExpanded
@@ -163,10 +163,6 @@ class TaskCategoryCard extends ViewModelWidget<TaskViewModel> {
                           task.assignees?.first.user?.sId,
                         );
                       },
-                      // onPressed: (taskId, studentId) {
-                      //   print('Task ID: $taskId');
-                      //   print('Student ID: $studentId');
-                      // },
                     );
                   },
                 ),

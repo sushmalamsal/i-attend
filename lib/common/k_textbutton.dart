@@ -3,10 +3,14 @@ import 'package:i_attend/common/k_small_text.dart';
 
 class KTextButton extends StatefulWidget {
   final void Function() onPressed;
+  final String? taskTitle;
+  // final void Function() bookFlip;
 
-  const KTextButton({
+  KTextButton({
     super.key,
+    this.taskTitle,
     required this.onPressed,
+    // required this.bookFlip
   });
 
   @override
@@ -18,7 +22,7 @@ class _KTextButtonState extends State<KTextButton> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: const Text('Confirmation'),
+        title: Text("Confirmation"),
         content: const Text('Have you completed your task?'),
         actions: [
           TextButton(
@@ -29,6 +33,7 @@ class _KTextButtonState extends State<KTextButton> {
             onPressed: () {
               widget.onPressed();
               Navigator.of(context).pop();
+              // widget.bookFlip();
             },
             child: const Text('Yes'),
           ),

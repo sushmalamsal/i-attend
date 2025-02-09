@@ -1,5 +1,6 @@
 import 'package:i_attend/common/k_textbutton.dart';
 import 'package:i_attend/import_all.dart';
+import 'package:rive/rive.dart';
 
 class TaskContainer extends StatelessWidget {
   final String taskId;
@@ -10,6 +11,7 @@ class TaskContainer extends StatelessWidget {
   final String assigningEntity;
   final bool completed;
   final void Function() onPressed;
+
   const TaskContainer({
     super.key,
     required this.taskId,
@@ -24,53 +26,86 @@ class TaskContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return completed
-        ? Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Task: $taskTitle",
-                  style: TextStyle(fontSize: 8, fontWeight: FontWeight.bold)),
-              SizedBox(height: 2),
-              Icon(
-                Icons.check_circle_outline_outlined,
-                color: Colors.lightGreen,
-                size: 50,
-              ),
-              KSmallText(
-                text: "Status: Completed",
-                textcolour: Colors.lightGreen,
-                fontSize: 8,
-              ),
-            ],
-          )
-        : Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("Task: $taskTitle",
-                  style: TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey.shade800)),
-              SizedBox(height: 2),
-              KSmallText(
-                text: "Description: $description",
-                textcolour: Colors.grey.shade800,
-                fontSize: 8,
-              ),
-              SizedBox(height: 2),
-              KSmallText(
-                text: 'Deadline: $deadline',
-                textcolour: Colors.grey.shade800,
-                fontSize: 8,
-              ),
-              KTextButton(
-                // taskId: taskId,
-                // studentId: studentId,
-                onPressed: () {
-                  onPressed();
-                },
-              ),
-            ],
-          );
+    return ViewModelBuilder<BookViewModel>.reactive(
+        viewModelBuilder: () => BookViewModel(),
+        builder: (context, model, child) {
+          return completed
+              ? Stack(
+                  children: <Widget>[
+                    RiveAnimation.asset(
+                      'assets/closed_book.riv',
+                      fit: BoxFit.contain,
+                    ),
+                    Positioned(
+                      top: 15,
+                      left: 30,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            taskTitle,
+                            style: TextStyle(
+                                fontSize: 8, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 2),
+                          Icon(
+                            Icons.check_circle_outline_outlined,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          KSmallText(
+                            text: "Completed",
+                            textcolour: Colors.white,
+                            fontSize: 8,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : Stack(
+                  children: <Widget>[
+                    RiveAnimation.asset(
+                      'assets/book_flip.riv',
+                      fit: BoxFit.contain,
+                      onInit: model.onRiveInit,
+                    ),
+                    Positioned(
+                      top: 10,
+                      left: 20,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            taskTitle,
+                            style: TextStyle(
+                                fontSize: 8,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey.shade800),
+                          ),
+                          SizedBox(height: 2),
+                          KSmallText(
+                            text: "Description: $description",
+                            textcolour: Colors.grey.shade800,
+                            fontSize: 6,
+                          ),
+                          SizedBox(height: 2),
+                          KSmallText(
+                            text: 'Deadline: $deadline',
+                            textcolour: Colors.grey.shade800,
+                            fontSize: 6,
+                          ),
+                          KTextButton(
+                            onPressed: () {
+                              onPressed();
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+        });
   }
 }

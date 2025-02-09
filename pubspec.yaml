@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/dollar.png
     - assets/book_flip.riv
+    - assets/closed_book.riv
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
