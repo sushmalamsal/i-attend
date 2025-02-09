@@ -3,6 +3,7 @@ export 'package:flutter/material.dart';
 export 'package:stacked/stacked.dart';
 export 'package:google_fonts/google_fonts.dart';
 export 'dart:convert';
+export 'package:dio/dio.dart';
 
 //common folder
 export '../common/k_appbar.dart';
@@ -29,6 +30,5 @@ export '../modules/tasks/viewmodel/taskcard_viewmodel.dart';
 export '../modules/tasks/view/addtask_view.dart';
 export '../modules/tasks/view/book_view.dart';
 export '../modules/tasks/view/taskcard_view.dart';
-export '../modules/tasks/viewmodel/tasks_viewmodel.dart';
 export '../modules/tasks/widgets/k_floatingtext.dart';
 export '../modules/tasks/widgets/k_progressbar.dart';

@@ -75,7 +75,6 @@ class _KProgressbarState extends State<KProgressbar>
             Stack(
               alignment: Alignment.centerLeft,
               children: [
-                // Background Bar
                 Container(
                   width: widget.width,
                   height: widget.height + 8,
@@ -84,7 +83,6 @@ class _KProgressbarState extends State<KProgressbar>
                     color: widget.backgroundColor.withOpacity(0.3),
                   ),
                 ),
-                // Progress Bar with Gradient & Shadow
                 Container(
                   width: widget.width * _animation.value,
                   height: widget.height,
@@ -106,18 +104,15 @@ class _KProgressbarState extends State<KProgressbar>
                     ],
                   ),
                 ),
-                // Bouncy Bubble Indicator
                 Positioned(
-                  left: (widget.width * _animation.value) -
-                      20, // Align with progress
+                  left: (widget.width * _animation.value) - 20,
                   child: Container(
                     width: 24,
                     height: 24,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: widget.progressColor,
-                      border: Border.all(
-                          color: Colors.white, width: 2), // White border
+                      border: Border.all(color: Colors.white, width: 2),
                       boxShadow: [
                         BoxShadow(
                           color: widget.progressColor.withOpacity(0.6),

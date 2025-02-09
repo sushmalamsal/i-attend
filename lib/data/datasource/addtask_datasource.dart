@@ -1,55 +1,44 @@
-import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:i_attend/import_all.dart';
 
-/// Abstract class
 abstract class IAddTaskDataSource {
-  Future<bool> addTask({
+  Future<Response> addTask({
     required String title,
     required String description,
     required String deadline,
-    required String assigneeID,
+    required List<String>? assigneeIDs,
   });
 }
 
 class AddTaskDataSource implements IAddTaskDataSource {
   static const String _baseUrl = "https://dev-demo.all-attend.com/dev-api/6969";
   static const String _logintoken =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzkyNzE4NjAuMjA2LCJpYXQiOjE3Mzg2NjcwNjAuMjA2LCJzdWIiOiI2NjBkMDMwOGYwOTIyZmZkNmQyZTUzODQiLCJyb2xlcyI6WyJVU0VSIiwiQlRfQURNSU4iXSwic2Nob29scyI6W119.WySsmxgS2KSusMt4MPMRg-bzeUx6OS-v_MTpl7NuKro";
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MzkzNDQyNjEuNDc3LCJpYXQiOjE3Mzg3Mzk0NjEuNDc3LCJzdWIiOiI2NzhlMDFiNzZlMjJlZmY5ZmI0YzYwOGQiLCJyb2xlcyI6WyJVU0VSIiwiU1RVREVOVCJdLCJzY2hvb2xzIjpbIjY2MGQwNzY2ZjQ5ODE2NjJkY2Q2ZDI2MyJdfQ.71RN9PIPhehoRY1kTOI8_sdg7YNuRq9wya5vEglz1gA";
+
+  final Dio _dio = Dio(
+    BaseOptions(
+      baseUrl: _baseUrl,
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $_logintoken",
+      },
+    ),
+  );
 
   @override
-  Future<bool> addTask({
+  Future<Response> addTask({
     required String title,
     required String description,
     required String deadline,
-    required String assigneeID,
+    required List<String>? assigneeIDs,
   }) async {
-    final url = Uri.parse("$_baseUrl/todos");
-
-    try {
-      final response = await http.post(
-        url,
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer $_logintoken",
-        },
-        body: jsonEncode({
-          "title": title,
-          "description": description,
-          "deadline": deadline,
-          "assignee": assigneeID,
-        }),
-      );
-
-      if (response.statusCode == 201) {
-        print("Success: ${response.body}");
-        return true;
-      } else {
-        print("Error: ${response.body}");
-        return false;
-      }
-    } catch (e) {
-      print("Exception: $e");
-      return false;
-    }
+    return await _dio.post(
+      "/todos",
+      data: {
+        "title": title,
+        "description": description,
+        "deadline": deadline,
+        "assignees": assigneeIDs,
+      },
+    );
   }
 }
