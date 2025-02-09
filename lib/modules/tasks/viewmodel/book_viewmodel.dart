@@ -3,10 +3,12 @@ import 'package:rive/rive.dart';
 
 class BookViewModel extends BaseViewModel {
   late StateMachineController? _controller;
-  SMIInput<bool>? _flipBook;
-  SMIInput<bool>? _startClose;
-  SMIInput<bool>? _bookClosed;
-  SMITrigger? _pointsGained;
+  SMIInput<bool>? flipBook;
+  SMIInput<bool>? startClose;
+  SMIInput<bool>? bookClosed;
+
+  bool isBookFlipped = false;
+  bool isBookClosed = false;
 
   StateMachineController? get controller => _controller;
 
@@ -16,29 +18,26 @@ class BookViewModel extends BaseViewModel {
     if (controller == null) return;
     artboard.addController(controller);
 
-    _flipBook = controller.findInput<bool>('flip_book') as SMIBool?;
-    _startClose = controller.findInput<bool>('start_close') as SMIBool?;
-    _bookClosed = controller.findInput<bool>('book_closed') as SMIBool?;
-    _pointsGained = controller.findInput('points_gained') as SMITrigger?;
-    if (_flipBook == null || _startClose == null || _bookClosed == null) {
+    flipBook = controller.findInput<bool>('flip_book') as SMIBool?;
+    startClose = controller.findInput<bool>('start_close') as SMIBool?;
+    bookClosed = controller.findInput<bool>('book_closed') as SMIBool?;
+
+    if (flipBook == null || startClose == null || bookClosed == null) {
       print("ERROR: Inputs are missing!");
     }
   }
 
   void onBookTap() {
-    if (!_flipBook!.value) {
-      _flipBook!.value = true;
-
+    if (!flipBook!.value) {
+      flipBook!.value = true;
+      isBookFlipped = true;
+      notifyListeners();
       Future.delayed(Duration(seconds: 1), () {
-        _flipBook!.value = false;
-        _startClose!.value = true;
-
+        startClose!.value = true;
         Future.delayed(Duration(seconds: 1), () {
-          _bookClosed!.value = true;
-
-          Future.delayed(Duration(seconds: 1), () {
-            _pointsGained!.fire();
-          });
+          bookClosed!.value = true;
+          isBookClosed = true;
+          notifyListeners();
         });
       });
     }

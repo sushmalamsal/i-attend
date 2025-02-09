@@ -1,17 +1,13 @@
 import 'package:i_attend/import_all.dart';
+import 'package:i_attend/modules/tasks/viewmodel/taskview_model.dart';
 
-class TasksView extends StatefulWidget {
+class TasksView extends StatelessWidget {
   const TasksView({super.key});
 
   @override
-  State<TasksView> createState() => _TasksViewState();
-}
-
-class _TasksViewState extends State<TasksView> {
-  @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<TasksViewModel>.reactive(
-      viewModelBuilder: () => TasksViewModel(),
+    return ViewModelBuilder<TaskViewModel>.reactive(
+      viewModelBuilder: () => TaskViewModel(),
       builder: (context, model, child) {
         return Scaffold(
             appBar: KAppbar(title: "My Tasks"),
@@ -32,18 +28,7 @@ class _TasksViewState extends State<TasksView> {
                       ),
                     ),
                     KDivider(),
-                    TaskcardView(
-                        title: "School",
-                        itemWidget: BookView(),
-                        pointsText: "130"),
-                    TaskcardView(
-                        title: "Parent",
-                        itemWidget: BookView(),
-                        pointsText: "130"),
-                    TaskcardView(
-                        title: "self",
-                        itemWidget: BookView(),
-                        pointsText: "130"),
+                    TaskcardView(),
                     SizedBox(
                       height: 20,
                     ),
@@ -52,13 +37,26 @@ class _TasksViewState extends State<TasksView> {
                         padding: EdgeInsets.all(12.0),
                         child: KDefaultButton(
                             label: "Add Task",
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => AddTaskView(),
-                                ),
+                            onPressed: () async {
+                              final result = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => AddTaskView(
+                                      onTaskAdded: () {
+                                        model.loadData();
+                                      },
+                                    ),
+                                  )).then(
+                                (value) {
+                                  model.loadData();
+                                },
                               );
+                              print(result);
+                              if (result != null && result is bool && result) {
+                                print(result);
+
+                                model.loadData();
+                              }
                             }))
                   ],
                 ),

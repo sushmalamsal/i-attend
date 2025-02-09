@@ -1,7 +1,9 @@
+import 'package:i_attend/common/k_datetime_field.dart';
 import 'package:i_attend/import_all.dart';
 
 class AddTaskView extends StatelessWidget {
-  const AddTaskView({super.key});
+  final VoidCallback? onTaskAdded;
+  const AddTaskView({super.key, this.onTaskAdded});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +29,7 @@ class AddTaskView extends StatelessWidget {
                   onChanged: model.updateButtonState,
                 ),
                 const SizedBox(height: 16),
-                KTextField(
+                KDateTimeField(
                   labelText: "Deadline",
                   controller: model.taskDeadlineController,
                   onChanged: model.updateButtonState,
@@ -37,8 +39,10 @@ class AddTaskView extends StatelessWidget {
                   label: "Add Task",
                   onPressed: model.isButtonEnabled
                       ? () {
-                          String assigneeId = "6698a07567669cb755d5b988";
-                          model.addTask(assigneeId, context);
+                          List<String>? assigneeIDs = [
+                            "678e01b76e22eff9fb4c608d"
+                          ];
+                          model.addTask(assigneeIDs, context);
                         }
                       : null,
                 ),
